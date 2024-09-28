@@ -3,15 +3,18 @@ data from https://ourworldindata.org/grapher/primary-sub-energy-source
 should automate downloading the csv - for the moment stored manually
 
 """
+import os
+
 import pandas as pd 
 import plotly.express as px
 import streamlit as st
 
+from common import dirFiles
 
 @st.cache_data
 def load_data():
 
-    df=pd.read_csv('../Files/primary-sub-energy-source.csv')
+    df=pd.read_csv(os.path.join(dirFiles,'primary-sub-energy-source.csv'))
     df.rename(columns=lambda s: s.replace(" consumption - TWh", ""), inplace=True)
     df.rename(columns={'Other renewables (including geothermal and biomass) - TWh':'Other renewables'}, inplace=True)
     df.iloc[:,3:]=df.iloc[:,3:].astype(float)

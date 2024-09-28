@@ -1,6 +1,10 @@
+import os
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+
+from common import dirFiles
 
 # Set up the Streamlit app
 st.title("Emission Reduction Solutions Data Explorer")
@@ -10,7 +14,7 @@ st.write("Units are in Total CO2-eq (Gt) Reduced/Sequestered (2020–2050)")
 # File upload
 @st.cache_data
 def load_data():
-    uploaded_file = "../Files/dd02.csv"
+    uploaded_file = os.path.join(dirFiles,"dd02.csv")
     df = pd.read_csv(uploaded_file)
     df = df[~df["Sector"].str.endswith("Total")]
     df.columns = ["Sector", "Subgroup", "Solution", "Scenario 1", "Scenario 2"]
